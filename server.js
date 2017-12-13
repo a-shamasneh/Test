@@ -17,14 +17,14 @@ app.use('api/*',req=>{
 });
 
 
-
+var user={};
 app.post('/api/login', function (req, res) {
 
     if(req.body && req.body.email && req.body.password){
         if(req.body.email == '1@1.com'){
 
             if(req.body.password == '1') {
-                var user ={
+                user ={
                     name:"Alex Jones"
                     , email:req.body.email
                     , password:req.body.password
@@ -43,7 +43,17 @@ app.post('/api/login', function (req, res) {
         res.send(422,{message:'yo! you miss`n some stuff!'});
 });
 
-
+// handel change picture 
+app.post('/api/ChangePicture', function (req, res) {
+    console.log(req);
+    if(req.body.pic){
+        user.profilePic=req.body.pic;
+        res.send(200,{newPic:user.profilePic});
+    }else{
+        res.send(400,{message:'OOps!! you cannot update picture with empty link'});
+    }
+       
+ });
 var serve = staticFiles('public/', {'index': ['index.html']});
 app.use(serve);
 
