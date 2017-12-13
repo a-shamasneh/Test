@@ -16,14 +16,14 @@ app.use('api/*',req=>{
     next();
 });
 
-
-var user={};
+var users=[{},{},{}];
+var user={ password:123123};
 app.post('/api/login', function (req, res) {
 
     if(req.body && req.body.email && req.body.password){
-        if(req.body.email == '1@1.com'){
+        if(req.body.email == '123@123.123'){
 
-            if(req.body.password == '1') {
+            if(req.body.password == user.password) {
                 user ={
                     name:"Alex Jones"
                     , email:req.body.email
@@ -51,6 +51,19 @@ app.post('/api/ChangePicture', function (req, res) {
         res.send(200,{newPic:user.profilePic});
     }else{
         res.send(400,{message:'OOps!! you cannot update picture with empty link'});
+    }
+       
+ });
+
+
+ // handel change password
+app.post('/api/ChangePassword', function (req, res) {
+    console.log(req);
+    if(req.body.newPass){
+        user.password=req.body.newPass;
+        res.send(200,null);
+    }else{
+        res.send(400,{message:'OOps!! you cannot update password with empty text'});
     }
        
  });
